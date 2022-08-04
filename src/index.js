@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 
 import signUpRoute from "./routes/signUpRoute.js";
+import signInRoute from "./routes/signInRoute.js";
 
 dotenv.config();
 
@@ -12,6 +13,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use(signUpRoute);
+app.use(signInRoute);
 
 const PORT = process.env.PORT;
 app.listen(PORT, ()=>{

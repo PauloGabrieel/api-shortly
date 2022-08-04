@@ -1,4 +1,4 @@
-import userSchema from "../schemas/usersSchema.js";
+import userSchema from "../schemas/signUpSchema.js";
 
 export async function validateUser(req, res, next){
     const user = req.body;
