@@ -5,7 +5,7 @@ export async function validateUser(req, res, next){
     const validation = userSchema.validate(user,{abortEarly: false});
 
     if(validation.error){
-        const message = validation.error.details;
+        const message = validation.error.details.map((item,index) => item.message);
         
         return res.status(422).send(message);
     };

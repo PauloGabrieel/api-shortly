@@ -7,7 +7,10 @@ export async function createUser(req,res){
         [name, email,password]);
         res.sendStatus(201);
     } catch (error) {
+        if(error.constraint){
+            return res.sendStatus(409);
+        };
         console.log(error);
-        res.status(500).send("houve um erro em cadastrar um novo usuário");
+        res.status(500).send("houve um erro ao cadastrar o usuário");
     };
 };
