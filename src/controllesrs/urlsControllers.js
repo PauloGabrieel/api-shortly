@@ -50,3 +50,27 @@ export async function redirectUrl(req, res){
     };
     
 };
+
+export async function deleteUrl(req, res){
+    try {
+        const urlId = parseInt(req.params.id);
+        const {userId} = res.locals;
+        
+        const existingUrl = await connection.query('SELECT * FROM urls WHERE urls.id = $1',[urlId]);
+
+        if(existingUrl.rowCount === 0){
+            return res.sendStatus(404);
+        };
+        
+        if(existingUrl.rows[0].userId != userId){
+            return res.sendStatus(401);
+        };
+
+        await connection.query('DELETE FROM urls WHERE id=$1',[urlId]);
+        res.sendStatus(204);
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("houve um erro em deletar a url");
+    }
+}
