@@ -15,3 +15,12 @@ export async function shortenUrl(req,res){
         console.log(error);
     };
 };
+export async function getShortUrlById(req, res){
+    const id = parseInt(req.params.id);
+    
+    const data =  await connection.query('SELECT u.id, u.url, u."shortUrl" FROM urls u WHERE u.id=$1;',[id])
+    if(data.rowCount === 0){
+        return res.sendStatus(404);
+    };
+    res.status(200).send(data.rows[0]);
+};

@@ -2,8 +2,6 @@ import urlSchema from "../schemas/urlsSchema.js";
 
 export function validateUrl (req,res, next){
     try {
-        const userId = res.locals.userId;
-        console.log(userId);
         const {url} = req.body;
 
         const validation = urlSchema.validate(url);
