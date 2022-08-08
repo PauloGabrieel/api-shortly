@@ -11,6 +11,7 @@ export default function authentication(req, res, next){
         
         if (!token) return res.status(401).send('Token não existe.');
         
+        
         const secretKey = process.env.JWT_SECRET;
         const data = jwt.verify(token,secretKey);
         
@@ -18,10 +19,10 @@ export default function authentication(req, res, next){
     } catch (error) {
         console.log(error);
         
-        if(error.name === "JsonWebTokenError"){
+        if(error.name === "JsonWebTokenError" || error.name === "TokenExpiredError"){
             return res.sendStatus(401);
         };
-        res.status(500).send("Houve um erro na autenticação do token");
+        return res.status(500).send("Houve um erro na autenticação do token");
     }
     
     

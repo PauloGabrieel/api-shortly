@@ -10,6 +10,7 @@ export async function userUrls(req, res){
             GROUP BY urls."userId"
             `,[userId]
         );
+        console.log(sumVisitCount)
         const {rows:userUrlList} = await connection.query(`
             SELECT u.id, u."shortUrl", u.url, u."visitCount"
             FROM urls  u
@@ -19,7 +20,7 @@ export async function userUrls(req, res){
         const data  = {
             id: userData[0].id,
             name: userData[0].name,
-            visitCount: sumVisitCount[0].sum,
+            visitCount: sumVisitCount[0]?.sum,
             shortenedUrls: userUrlList
         }
         res.status(200).send(data);    

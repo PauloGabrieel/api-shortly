@@ -24,9 +24,9 @@ export default async function loginUser(req, res){
             email: existingUser.rows[0].email
         };
         const secretKey = process.env.JWT_SECRET;
-        // const expirationTime  = {expiresIn: 60 * 30};
+        const TIME_30S  = {expiresIn: 60 * 30};
         
-        const token = jwt.sign(userData, secretKey);
+        const token = jwt.sign(userData, secretKey, TIME_30S);
         connection.query('INSERT INTO sessions ("userId", token) VALUES ($1,$2)',
         [existingUser.rows[0].id,token]);
         res.status(200).send(token);
